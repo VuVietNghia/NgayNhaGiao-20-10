@@ -209,7 +209,7 @@
     <div class="card">
       <div class="card-content">
         <div class="gif-container" id="gifContainer">
-          <img src="leitner-douwe-leitner.gif" alt="Celebration GIF" />
+          <img src="./leitner-douwe-leitner.gif" alt="Celebration GIF" />
         </div>
 
         <div class="card-text">
@@ -235,7 +235,44 @@
       const btn = document.getElementById("btn-celebrate");
       const msgBox = document.getElementById("messageBox");
       const gifContainer = document.getElementById("gifContainer");
+      const gifImg = gifContainer.querySelector("img");
       let isCelebrated = false;
+
+      // Hàm thử load GIF với nhiều đường dẫn khác nhau (để tương thích với Android)
+      function tryLoadGif() {
+        const paths = [
+          "./leitner-douwe-leitner.gif",
+          "leitner-douwe-leitner.gif",
+          "./leitner-douwe-leitner.GIF",
+          "leitner-douwe-leitner.GIF",
+        ];
+
+        let currentPathIndex = 0;
+
+        function tryNextPath() {
+          if (currentPathIndex >= paths.length) {
+            console.warn(
+              "Không thể tải GIF từ bất kỳ đường dẫn nào. Đảm bảo file GIF nằm cùng thư mục với file HTML."
+            );
+            return;
+          }
+
+          const img = new Image();
+          img.onload = function () {
+            gifImg.src = paths[currentPathIndex];
+          };
+          img.onerror = function () {
+            currentPathIndex++;
+            tryNextPath();
+          };
+          img.src = paths[currentPathIndex];
+        }
+
+        tryNextPath();
+      }
+
+      // Thử load GIF khi trang tải xong
+      window.addEventListener("load", tryLoadGif);
 
       function celebrate() {
         if (isCelebrated) return;
