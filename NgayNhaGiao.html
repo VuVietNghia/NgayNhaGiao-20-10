@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày Nhà Giáo Việt Nam 20/11</title>
+    <style>
+        /* --- CSS LÀM ĐẸP --- */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-image: url('https://images.unsplash.com/photo-1497250681960-ef04b1e15a90?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Lớp phủ mờ để text dễ đọc hơn */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s ease forwards;
+            border: 2px solid #ffd700;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d32f2f;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .message-box {
+            min-height: 120px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 30px;
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+            display: none; /* Ẩn lúc đầu */
+        }
+
+        button {
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(221, 36, 118, 0.4);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(221, 36, 118, 0.6);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Hiệu ứng Confetti (Pháo hoa giấy) */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: fall linear forwards;
+            z-index: 5;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="card">
+        <div style="font-size: 4rem; margin-bottom: 10px;">💐</div>
+        
+        <h1>Chúc Mừng 20/11</h1>
+        <p class="subtitle">Ngày Nhà Giáo Việt Nam</p>
+
+        <div class="message-box" id="messageBox">
+            </div>
+
+        <button id="btn-celebrate" onclick="celebrate()">Gửi Lời Tri Ân</button>
+        
+        <div class="footer">
+            From your beloved student with ❤️
+        </div>
+    </div>
+
+    <script>
+        /* --- JAVASCRIPT XỬ LÝ --- */
+        
+        const messageText = `
+            Nhân ngày Nhà giáo Việt Nam 20/11, con/cháu xin gửi lời chúc mừng 
+            và cảm ơn đến cô/bác. Chúc cô/bác luôn tràn đầy sức khỏe, niềm vui 
+            và tiếp tục lan tỏa tri thức, yêu thương đến các thế hệ học trò! 🌸👩‍🏫
+        `
+        const btn = document.getElementById('btn-celebrate');
+        const msgBox = document.getElementById('messageBox');
+        let isCelebrated = false;
+
+        function celebrate() {
+            if (isCelebrated) return;
+            isCelebrated = true;
+
+            // 1. Ẩn nút hoặc đổi trạng thái
+            btn.innerText = "Cảm ơn Thầy Cô!";
+            btn.style.background = "#4caf50";
+            
+            // 2. Hiện khung tin nhắn
+            msgBox.style.display = "block";
+            
+            // 3. Hiệu ứng gõ chữ (Typewriter)
+            let i = 0;
+            const speed = 50; // Tốc độ gõ (ms)
+
+            function typeWriter() {
+                if (i < messageText.length) {
+                    msgBox.innerHTML += messageText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            typeWriter();
+
+            // 4. Bắn pháo hoa giấy (Confetti Effect)
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const shapes = ['square', 'circle'];
+            
+            // Tạo 100 mảnh giấy
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random màu sắc
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random vị trí xuất phát
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                
+                // Random kích thước
+                const size = Math.random() * 10 + 5 + 'px';
+                confetti.style.width = size;
+                confetti.style.height = size;
+                
+                // Random hình dáng (tròn hoặc vuông)
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                }
+
+                // Random thời gian rơi
+                const duration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDuration = duration;
+
+                document.body.appendChild(confetti);
+
+                // Xóa element sau khi rơi xong để nhẹ máy
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
