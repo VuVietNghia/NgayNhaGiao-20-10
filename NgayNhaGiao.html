@@ -224,6 +224,11 @@
       <button id="btn-celebrate" onclick="celebrate()">Gửi Lời Tri Ân</button>
 
       <div class="footer">With love from your family ❤️</div>
+      <!-- Hidden YouTube Player Container -->
+      <div
+        id="youtube-player"
+        style="position: absolute; width: 0; height: 0; opacity: 0"
+      ></div>
     </div>
 
     <script>
@@ -277,6 +282,21 @@
       function celebrate() {
         if (isCelebrated) return;
         isCelebrated = true;
+
+        // Play background music by injecting iframe
+        const playerContainer = document.getElementById("youtube-player");
+        playerContainer.innerHTML = `
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/YqW4_VEIttY?si=_6XHiMqAfeUpXI7c&autoplay=1&loop=1&playlist=YqW4_VEIttY" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+          </iframe>
+        `;
 
         // 1. Ẩn nút hoặc đổi trạng thái
         btn.innerText = "Tada!";
